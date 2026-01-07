@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Day{
+    char* dayName;
+    char* activity;
+    int date;
+};
+void create(struct Day* day){
+    day->dayName=(char*)malloc(sizeof(char)*20);
+    day->activity=(char*)malloc(sizeof(char)*100);
+    printf("Enter Day name: ");
+    scanf("%s",day->dayName);
+    printf("Enter date: ");
+    scanf("%d", &day->date);
+    printf("Enter activity: ");
+    scanf("%s",day->activity);
+}
+void read(struct Day* calendar,int size){
+
+    for(int i=0;i<size;i++){
+        printf("Enter the details for the day %d:",i+1);
+        create(&calendar[i]);
+    }
+}
+void display(struct Day* calendar,int size)
+{
+    printf("Details:\n");
+    for(int i=0;i<size;i++)
+    {
+        printf("day: %s\n",calendar[i].dayName);
+        printf("ACti: %s\n",calendar[i].activity);
+        printf("Date: %d\n",calendar[i].date);
+    }
+}
+void freememory(struct Day* calendar,int size){
+    for(int i=0;i<size;i++){
+        free(calendar[i].dayName);
+        free(calendar[i].activity);
+    }
+}
+int main(){
+    int size;
+    printf("Enter the no.of days:");
+    scanf("%d",&size);
+    struct Day *calendar=(struct Day *)malloc(sizeof(struct Day));
+    if(calendar==NULL)
+        printf("Fail");
+    read(calendar,size);
+    display(calendar,size);
+    freememory(calendar,size);
+    free(calendar);
+    return 0;
+}
